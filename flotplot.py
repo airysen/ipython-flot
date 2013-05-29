@@ -57,24 +57,24 @@ class Plot():
             if type(data[0]) == list or ('numpy' in str(type(data[0])) and data[0].shape != () ):           
                 for index,item in enumerate(data):
                     if data1 is not None:
-                        d += "var d"+str(index)+" ="+ encoder.encode(zip(item,data1[index])) +";\n"                 
+                        d += "var d"+str(index)+" ="+ encoder.encode(list(zip(item,data1[index]))) +";\n"                 
                         if label is not None and type(label) == list:
                             labelstring += "{ label:\"" +label[index] + "\", data:d" + str(index) + " },"
                         else:
                             labelstring += "{ data:d" + str(index) + " },"
                     else:
-                        d += "var d"+str(index)+" ="+ encoder.encode(zip(item,range(len(item)))) +";\n"                 
+                        d += "var d"+str(index)+" ="+ encoder.encode(list(zip(item,range(len(item))))) +";\n"                 
                         if label is not None and type(label) == list:
                             labelstring += "{ label:\"" +label[index] + "\", data:d" + str(index) + " },"
                         else:
                             labelstring += "{ data:d" + str(index) + " },"
-                labelstring = string.rstrip(labelstring,",")
+                labelstring = str.rstrip(labelstring,",")
             else:
                 datastring = "var d1 = "
                 if data1 is not None:
-                    datastring += encoder.encode(zip(data,data1)) +";"
+                    datastring += encoder.encode(list(zip(data,data1))) +";"
                 else:
-                    datastring += encoder.encode(zip(data,range(len(data)))) +";"
+                    datastring += encoder.encode(list(zip(data,range(len(data))))) +";"
                 
                 if label is not None and type(label) == str:
                     labelstring = "{ label : \"" + label + "\"," + "data:d1}"
